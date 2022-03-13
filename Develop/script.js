@@ -3,9 +3,9 @@ $(document).ready(function () {
     $("#currentDay").text(today);
 
     var start = 9;
-    var end = 24;
+    var end = 17;
 
-    var d = new Date(); 
+    var d = new Date();
     var dhour = d.getHours();
 
     function formatTime(hour) {
@@ -19,7 +19,7 @@ $(document).ready(function () {
             formatHour = formatHour + "PM";
         } else {
             formatHour = formatHour + "AM";
-        } 
+        }
         return formatHour;
     }
 
@@ -33,20 +33,31 @@ $(document).ready(function () {
         }
     }
 
-    var saveEvent = function () {
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-      };
+    var saveTask = function(hour, task) {
+        localStorage.setItem(hour, JSON.stringify(task));
+    };
+
+    var getTask = function(hour) {
+       var text = JSON.parse(localStorage.getItem(hour));
+       if (text) {
+           return text;
+       } else {
+           return "";
+       }
+    }
 
     var innerHTML = "";
 
     for (var i = start; i <= end; i++) {
-        innerHTML += '<div id="'+formatTime(i)+'" class="row"><div class="col-sm-2 text-right align-text-top border border-secondary rounded pt-2">'+formatTime(i)+'</div><textarea id="'+formatTime(i)+'-task" class="col-sm-8 '+backgroundColor(i)+' text-left align-text-top border border-secondary pt-2"></textarea><button id="'+formatTime(i)+'-save" type="button" class="col-sm-2 btn btn-info border border-secondary rounded">Save</button></div>';
+        innerHTML += '<div id="' + formatTime(i) + '" class="row"><div class="col-sm-2 text-right align-text-top border border-secondary rounded pt-2 bg-gradient">' + formatTime(i) + '</div><textarea id="' + formatTime(i) + '-task" class="col-sm-8 ' + backgroundColor(i) + ' text-left align-text-top border border-secondary pt-2 bg-gradient">' + getTask(formatTime(i)) + '</textarea><button id="' + formatTime(i) + '-save" type="button" class="col-sm-2 btn btn-info border border-secondary rounded">Save</button></div>';
     }
     $("#tasks").html(innerHTML);
 
     $("#tasks").on("click", ".btn", function () {
         var selString = "#" + this.id.replace("save", "task");
+        var selHour = this.id.replace("-save", "");
         var textInput = $(selString).val();
-      });
+        saveTask(selHour, textInput);
+    });
 });
 
