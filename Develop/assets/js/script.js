@@ -25,11 +25,11 @@ $(document).ready(function () {
 
     function backgroundColor(hour) {
         if (dhour == hour) {
-            return "bg-danger";
+            return "present";
         } else if (dhour < hour) {
-            return "bg-success";
+            return "future";
         } else {
-            return "bg-light";
+            return "past";
         }
     }
 
@@ -49,7 +49,7 @@ $(document).ready(function () {
     var innerHTML = "";
 
     for (var i = start; i <= end; i++) {
-        innerHTML += '<div id="' + formatTime(i) + '" class="row"><div class="col-sm-2 text-right align-text-top border border-secondary rounded pt-2 bg-gradient">' + formatTime(i) + '</div><textarea id="' + formatTime(i) + '-task" class="col-sm-8 ' + backgroundColor(i) + ' text-left align-text-top border border-secondary pt-2 bg-gradient">' + getTask(formatTime(i)) + '</textarea><button id="' + formatTime(i) + '-save" type="button" class="col-sm-2 btn btn-info border border-secondary rounded">Save</button></div>';
+        innerHTML += '<div id="' + formatTime(i) + '" class="row"><div class="col-sm-2 text-right align-text-top border border-secondary rounded pt-2 bg-gradient">' + formatTime(i) + '</div><textarea id="' + formatTime(i) + '-task" class="col-sm-8 ' + backgroundColor(i) + ' text-left align-text-top border border-secondary pt-2">' + getTask(formatTime(i)) + '</textarea><button id="' + formatTime(i) + '-save" type="button" class="col-sm-2 btn saveBtn border border-secondary rounded">Save</button></div>';
     }
     $("#tasks").html(innerHTML);
 
